@@ -28,4 +28,18 @@ class UserRepository
     {
         return $this->repository->find($id);
     }
+
+    public function findUserByToken(string $token): ?User
+    {
+        return $this->repository->findOneBy(['confirm_token' => $token]);
+    }
+
+    public function existByEmail(string $email): bool
+    {
+        return $this->repository->createQueryBuilder('u')
+                ->select('COUNT(u.email)')
+                ->where('u.email = :email')
+                ->setParameter('email', $email)
+                ->getQuery()->getSingleScalarResult() > 0;
+    }
 }

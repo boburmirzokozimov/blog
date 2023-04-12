@@ -9,7 +9,7 @@ use App\Model\User\Entity\UserRepository;
 use App\Model\User\Services\PasswordHasher;
 use App\Model\User\Services\SignUpConfirmTokenizer;
 use App\Model\User\Services\SignUpConfirmTokenSender;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use DomainException;
 
 class Handler
 {
@@ -19,18 +19,20 @@ class Handler
     {
     }
 
-    /**
-     * @throws TransportExceptionInterface
-     */
     public function handle(Command $command): void
     {
+        if ($this->repository->existByEmail($command->email)) {
+            throw new DomainException('User with this email address already exists');
+        }
+
         $token = SignUpConfirmTokenizer::next();
-        $user = new User(
+        
+        $user = User::createUser(
             new Name($command->firstName, $command->lastName),
             $command->email,
             PasswordHasher::hash($command->password),
             $command->password,
-            SignUpConfirmTokenizer::next(),
+            $token,
         );
 
         $this->repository->add($user);

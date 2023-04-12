@@ -12,8 +12,8 @@ use Ramsey\Uuid\Uuid;
 class User
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'guid')]
-    private int $id;
+    #[ORM\Column(type: 'string')]
+    private string $id;
 
     #[Embedded(class: Name::class)]
     private Name $name;
@@ -87,7 +87,7 @@ class User
     }
 
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -135,6 +135,15 @@ class User
     public function getRole(): Role
     {
         return $this->role;
+    }
+
+    public function confirmSignUp(): void
+    {
+        if (!$this->status->isWait()) {
+            throw new DomainException('User is already active');
+        }
+        $this->status = Status::active();
+        $this->confirm_token = '';
     }
 
 }

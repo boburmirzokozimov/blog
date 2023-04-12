@@ -9,21 +9,26 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserIdentity implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface
 {
-    public function __construct(private string $id, private Name $name, private string $email, private string $password, private string $role,)
+    public function __construct(private ?string $id,
+                                private ?Name   $name,
+                                private ?string $email,
+                                private ?string $password,
+                                private ?string $role,
+    )
     {
     }
 
-    public function getId(): string
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function getName(): Name
+    public function getName(): ?Name
     {
         return $this->name;
     }
 
-    public function getRole(): string
+    public function getRole(): ?string
     {
         return $this->role;
     }
@@ -52,7 +57,7 @@ class UserIdentity implements UserInterface, PasswordAuthenticatedUserInterface,
         return $this->email === $user->getEmail() && $this->id === $user->id;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }

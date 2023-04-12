@@ -4,10 +4,10 @@ namespace App\RealModel\User;
 
 class AuthView
 {
-    public string $id;
-    public string $name_first;
-    public string $name_last;
-    public string $email;
-    public string $password;
-    public string $role;
+    public ?string $id = null;
+    public ?string $name_first = null;
+    public ?string $name_last = null;
+    public ?string $email = null;
+    public ?string $password = null;
+    public ?string $role = null;
 }

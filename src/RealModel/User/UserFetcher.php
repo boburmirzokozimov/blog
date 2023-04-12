@@ -11,7 +11,7 @@ class UserFetcher
     {
     }
 
-    public function loadUserByEmail(string $email): AuthView
+    public function loadUserByEmail(string $email): ?AuthView
     {
         $qb = $this->connection->createQueryBuilder()
             ->select('u.id',
@@ -27,8 +27,11 @@ class UserFetcher
             ->executeQuery()
             ->fetchAssociative();
 
-        return $this->serializer->denormalize($qb, AuthView::class);
-
+        if ($qb) {
+            return $this->serializer->denormalize($qb, AuthView::class);
+        } else {
+            return null;
+        }
 
     }
 }

@@ -5,7 +5,7 @@ namespace App\Security;
 use App\Model\User\Entity\Name;
 use App\RealModel\User\AuthView;
 use App\RealModel\User\UserFetcher;
-use DomainException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Serializer\Exception\UnsupportedException;
@@ -45,7 +45,7 @@ class UserProvider implements UserProviderInterface
     public function loadUserByIdentifier(string $identifier): UserInterface
     {
         if (!$user = $this->fetcher->loadUserByEmail($identifier)) {
-            throw new  DomainException('Unable to load user by identifier.');
+            throw new  UserNotFoundException('Unable to load user by identifier.');
         }
 
         return self::identityByUser($user);

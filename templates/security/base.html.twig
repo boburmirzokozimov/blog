@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -10,13 +10,9 @@
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
 </head>
-<body class="">
-<nav class="w-2/3 m-auto" {{ react_component('NavBar') }}></nav>
-<div class="w-2/3 m-auto flex justify-center">
-    {% include '_flashes.html.twig' %}
-    
-    {% block body %}{% endblock %}
-</div>
+<body class="flex justify-center relative bg-gradient-to-r from-cyan-400 to-blue-600" style="height: 100vh">
+{% include '_flashes.html.twig' %}
+{% block body %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
 {% endblock %}

@@ -1,0 +1,11 @@
+{# templates/emails/signup.html.twig #}
+<h1>Welcome !</h1>
+
+<p>
+    You signed up as {{ name }} the following email:
+    {% set url = url('auth.signup.confirm', {'token': token}) %}
+
+    <a href="{{ url }}">Click here to activate your token!</a>
+</p>
+
+
